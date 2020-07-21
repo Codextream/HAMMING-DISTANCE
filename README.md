@@ -1,20 +1,24 @@
-# 3 SUM
+# HAMMING DISTANCE
 
-Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
+
+Given two integers x and y, calculate the Hamming distance.
 
 ### Note:
-
-The solution set must not contain duplicate triplets.
+0 ≤ x, y < 231.
 
 ### Example:
 <pre>
-Given array nums = [-1, 0, 1, 2, -1, -4],
+Input: x = 1, y = 4
 
-A solution set is:
-[
-  [-1, 0, 1],
-  [-1, -1, 2]
-]
+Output: 2
+
+Explanation:
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+
+The above arrows point to positions where the corresponding bits are different.
 </pre>
 
 ### Solution:
@@ -24,26 +28,11 @@ A solution set is:
 
 class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        int n = nums.size();
-        vector<vector<int>> ans;
-        for(int i=0;i<n-2;i++){
-               if(i>0 && (nums[i]==nums[i-1]) )continue;
-               int l=i+1, r= n-1;
-               while(l<r){
-                   int sum =nums[i]+nums[l]+nums[r];
-                   if(sum<0) l++;
-                   else if(sum>0)r--;
-                   else {
-                       ans.push_back(vector<int>{nums[i],nums[l],nums[r]});
-                       while(l+1<r && nums[l]==nums[l+1])l++;
-                       while(l<r-1 && nums[r]==nums[r-1]) r--;
-                       l++; r--;
-                   }
-               }
-        }
-        return ans;
+    int hammingDistance(int x, int y) {
+        int count=0;
+        bitset<32>binary1(x);bitset<32>binary2(y);
+        for(int i=0;i<32;i++)if(binary1[i]!=binary2[i])count++;
+        return count;
     }
 };
 
